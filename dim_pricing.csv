@@ -1,0 +1,17 @@
+network,bundle_name,price_ngn,data_size_gb,validity_days,cost_per_gb_ngn
+MTN,1GB - 1 Day,350,1.0,1,350.0
+MTN,1.5GB - 30 Days,1000,1.5,30,666.67
+MTN,3.5GB - 30 Days,1500,3.5,30,428.57
+MTN,10GB - 30 Days,3500,10.0,30,350.0
+Airtel,1GB - 1 Day,300,1.0,1,300.0
+Airtel,1.5GB - 30 Days,1000,1.5,30,666.67
+Airtel,4GB - 30 Days,1500,4.0,30,375.0
+Airtel,10GB - 30 Days,3000,10.0,30,300.0
+Glo,1.2GB - 1 Day,300,1.2,1,250.0
+Glo,1.8GB - 30 Days,1000,1.8,30,555.56
+Glo,4.1GB - 30 Days,1500,4.1,30,365.85
+Glo,11.5GB - 30 Days,3500,11.5,30,304.35
+9mobile,1GB - 1 Day,300,1.0,1,300.0
+9mobile,1.5GB - 30 Days,1000,1.5,30,666.67
+9mobile,4.5GB - 30 Days,1500,4.5,30,333.33
+9mobile,11GB - 30 Days,3500,11.0,30,318.18
