@@ -15,22 +15,22 @@ telecom business questions — built across Excel/Google Sheets, MySQL, and Powe
 
 ## Dashboard
 
-![Telecom Analytics Dashboard](dashboard_screenshot.png)
+![Telecom Analytics Dashboard](Telecom%20Analytics%20Overview.png)
 
-*Built in Power BI, connected live to a MySQL database of 6 analytical views.*
+Built in Power BI, connected live to a MySQL database of 6 analytical views.
 
 ## Tech Stack
 
-- **Google Sheets / Excel** — data joining (VLOOKUP/XLOOKUP) and initial cleaning
-- **MySQL** — relational schema (5 tables, foreign-key constraints) and 6 analytical views
-- **Power BI** — dashboard with 5 KPI cards and 6 visuals, connected live to MySQL
+- *Google Sheets / Excel* — data joining (VLOOKUP/XLOOKUP) and initial cleaning
+- *MySQL* — relational schema (5 tables, foreign-key constraints) and 6 analytical views
+- *Power BI* — dashboard with 5 KPI cards and 6 visuals, connected live to MySQL
 
 ## Data Sources
 
-- **Real data:** NCC Consumer Complaint Statistics, pulled directly from the
+- *Real data:* NCC Consumer Complaint Statistics, pulled directly from the
   [NCC Market Data & Reports portal](https://ncc.gov.ng/market-data-reports/consumer-complaint-statistics)
   (February 2026 figures, plus a full-year 2025 trend).
-- **Simulated data:** customer base (300 customers), recharge transactions (2,100+),
+- *Simulated data:* customer base (300 customers), recharge transactions (2,100+),
   and usage/revenue records (5,400+) — no real telecom company publishes
   customer-level data, so this layer is simulated for portfolio purposes, following
   standard practice for this type of project.
@@ -39,49 +39,55 @@ telecom business questions — built across Excel/Google Sheets, MySQL, and Powe
 
 | File | Description |
 |---|---|
-| `telecom_analytics.sql` | Full schema — 5 tables + 6 analytical views (one per business question) |
-| `dashboard_screenshot.png` | Screenshot of the final Power BI dashboard |
-| `Telecom_Analytics_Study_Summary.pdf` | Full write-up: SQL code, interpretation of each view, lessons learned, and per-operator recommendations |
+| telecom analytics.sql | Full schema — 5 tables + 6 analytical views (one per business question) |
+| dim_customers.csv | Raw customer master data (300 customers) |
+| dim_pricing.csv | Reference bundle pricing by network |
+| fact_recharges.csv | Raw recharge transaction data (2,100+ rows) |
+| fact_usage_revenue.csv | Raw monthly usage/revenue data by service type (5,400+ rows) |
+| ncc_complaints.csv | NCC complaint statistics by operator (real Feb 2026 data + 2025 trend) |
+| Telecom Analytics Overview.png | Screenshot of the final Power BI dashboard |
+| Nigeria telecom_analytics (1).pdf | Full write-up: SQL code, interpretation of each view, lessons learned, and per-operator recommendations |
 
 ## Data Model
 
-```
+
 dim_customers ──┬── fact_recharges     (customer_id)
                 └── fact_usage_revenue (customer_id)
 
 dim_pricing         (standalone — network bundle reference pricing)
 ncc_complaints      (standalone — real market-level complaint data)
-```
 
-`dim_customers` is the hub — both fact tables link to it via foreign key on
-`customer_id`. `dim_pricing` and `ncc_complaints` are market/reference data,
-not tied to individual simulated customers.
+
+dim_customers is the hub — both fact tables link to it via foreign key on
+customer_id. dim_pricing and ncc_complaints are market/reference data,
+not tied to individual simulated customers. Load the 5 CSVs into the tables
+created by telecom analytics.sql to reproduce the database.
 
 ## Key Findings
 
-- **Data now drives ~68% of revenue**, versus 27% for voice and under 5% for SMS —
+- *Data now drives ~68% of revenue*, versus 27% for voice and under 5% for SMS —
   consistent with the well-known industry-wide shift toward data consumption.
-- **ARPU is remarkably even across all 6 geopolitical zones** (within ~₦1,400 of
-  each other) — revenue differences between regions come from customer *volume*,
+- *ARPU is remarkably even across all 6 geopolitical zones* (within ~₦1,400 of
+  each other) — revenue differences between regions come from customer volume,
   not per-customer spending behavior.
-- **Postpaid customers generate 71% more revenue per customer than prepaid**,
+- *Postpaid customers generate 71% more revenue per customer than prepaid*,
   despite being only 16% of the customer base — a clear upsell/conversion target.
-- **35 customers (11.7%) show a 90+ day churn risk signal** based on recharge
+- *35 customers (11.7%) show a 90+ day churn risk signal* based on recharge
   recency — a concrete retention target list.
-- **USSD is the dominant recharge channel** by both transaction volume and value,
+- *USSD is the dominant recharge channel* by both transaction volume and value,
   reflecting its accessibility on any phone without data or a smartphone app.
 - Across the 4 real Nigerian operators, **resolution rates cluster tightly at
   96–97%**, with Airtel narrowly leading and Glo showing the highest total
   complaint volume.
 
-See `Telecom_Analytics_Study_Summary.pdf` for the full breakdown, including the
+See Nigeria telecom_analytics (1).pdf for the full breakdown, including the
 SQL behind every finding and recommendations for each operator.
 
 ## How the Views Work
 
-Each of the 6 SQL views answers exactly one business question, so Power BI never
-queries raw tables directly — it connects straight to pre-aggregated, business-
-question-shaped views. See `telecom_analytics.sql` for the full commented code.
+Each of the 6 SQL views in telecom analytics.sql answers exactly one business
+question, so Power BI never queries raw tables directly — it connects straight
+to pre-aggregated, business-question-shaped views.
 
 ---
 
